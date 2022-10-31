@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="AzurLaneWikiScraperWPF.View.NavBar"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:AzurLaneWikiScraperWPF.View"
+			 mc:Ignorable="d"
+			 d:DesignHeight="30"
+			 d:DesignWidth="500">
+	<Grid>
+		<Rectangle Fill="MediumPurple"
+				   Grid.Row="0"
+				   Width="10"
+				   HorizontalAlignment="Right" />
+		<Rectangle Fill="MediumPurple"
+				   Grid.Row="0"
+				   RadiusX="10"
+				   RadiusY="10" />
+	</Grid>
+</UserControl>
