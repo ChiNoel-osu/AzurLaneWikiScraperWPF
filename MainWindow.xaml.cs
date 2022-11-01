@@ -25,6 +25,7 @@ namespace AzurLaneWikiScraperWPF
 		public MainWindow()
 		{
 			MainVM = new MainViewModel();
+			DataContext = MainVM;
 			InitializeComponent();
 		}
 

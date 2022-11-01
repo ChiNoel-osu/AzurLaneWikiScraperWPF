@@ -13,6 +13,13 @@
 		Width="600"
 		WindowStartupLocation="CenterScreen"
 		AllowsTransparency="True">
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/View/GlobalResourceDictionary.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Window.Resources>
 	<WindowChrome.WindowChrome>
 		<WindowChrome CaptionHeight="0"
 					  ResizeBorderThickness="5"/>
@@ -33,7 +40,8 @@
 				<view:TopBar Grid.Column="1"
 							 MouseDown="TopBar_MouseDown" />
 			</Grid>
-			<view:HomePage Grid.Row="1" Margin="0,10,0,0"/>
+			<view:HomePage Grid.Row="1"
+						   Margin="0,10,0,0"/>
 		</Grid>
 	</Border>
 

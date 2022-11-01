@@ -17,6 +17,7 @@
 				<Setter.Value>
 					<ControlTemplate>
 						<!--Empty FocusVisual so it doesn't have that black dot around the button-->
+						<!--Well actually just make the button unfocusable lol-->
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
@@ -136,6 +137,7 @@
 					Width="30"
 					Background="#FF605C"
 					Margin="-0.1,-0.2,0,0"
+					Focusable="False"
 					Command="{Binding TopBar.WndActCommand}">
 				<Button.CommandParameter>
 					<MultiBinding Converter="{StaticResource WndActConverter}">
@@ -153,6 +155,7 @@
 					Width="20"
 					Background="#FFBD44"
 					Margin="5,0,0,0"
+					Focusable="False"
 					Command="{Binding TopBar.WndActCommand}">
 				<Button.CommandParameter>
 					<MultiBinding Converter="{StaticResource WndActConverter}">
@@ -168,6 +171,7 @@
 					Width="20"
 					Background="#00CA4E"
 					Margin="5,0,0,0"
+					Focusable="False"
 					Command="{Binding TopBar.WndActCommand}">
 				<Button.CommandParameter>
 					<MultiBinding Converter="{StaticResource WndActConverter}">

@@ -7,11 +7,12 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 	public class MainViewModel
 	{
 		public TopBarViewModel TopBar { get; set; }
-
+		public HomePageLeftPanelViewModel HomePageLeftPanel { get; set; }
 
 		public MainViewModel()
 		{
 			TopBar = new TopBarViewModel();
+			HomePageLeftPanel = new HomePageLeftPanelViewModel();
 		}
 	}
 }

@@ -6,14 +6,16 @@
 			 xmlns:local="clr-namespace:AzurLaneWikiScraperWPF.View"
 			 mc:Ignorable="d"
 			 d:DesignHeight="500"
-			 d:DesignWidth="750">
+			 d:DesignWidth="600">
+	<d:UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/View/GlobalResourceDictionary.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</d:UserControl.Resources>
 	<Grid ClipToBounds="True">
-		<Grid.OpacityMask>
-			<VisualBrush Visual="{Binding ElementName=Shape}"
-						 Stretch="None" />
-		</Grid.OpacityMask>
-		<Rectangle Name="Shape"
-				   RadiusX="10"
+		<Rectangle RadiusX="10"
 				   RadiusY="10">
 			<Rectangle.Fill>
 				<LinearGradientBrush EndPoint="0.158,-0.2"
@@ -37,23 +39,23 @@
 				</LinearGradientBrush>
 			</Rectangle.Fill>
 		</Rectangle>
-		<Rectangle Fill="Transparent"
-				   Stroke="Black"
-				   StrokeThickness="1"
-				   RadiusX="10"
-				   RadiusY="10">
-			<Rectangle.Effect>
-				<DropShadowEffect ShadowDepth="0"
-								  BlurRadius="10"
-								  Color="Black" />
-			</Rectangle.Effect>
-		</Rectangle>
 		<Grid Margin="10">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="3*"/>
+				<ColumnDefinition Width="3*" />
 			</Grid.ColumnDefinitions>
-			<Border Grid.Column="0" Margin="10">
+
+			<Border Grid.Column="0"
+					Margin="0,0,12,0">
+				<local:HomePageLeftPanel />
+			</Border>
+			<GridSplitter Grid.Column="0"
+						  Width="4"
+						  Focusable="False"
+						  Background="DarkGray" />
+			<Border Grid.Column="1"
+					Margin="8,0,0,0">
+				<local:HomePageRightPanel />
 			</Border>
 		</Grid>
 	</Grid>
