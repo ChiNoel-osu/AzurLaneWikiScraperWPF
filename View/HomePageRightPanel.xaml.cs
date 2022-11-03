@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AzurLaneWikiScraperWPF.Model;
+using AzurLaneWikiScraperWPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +23,12 @@ namespace AzurLaneWikiScraperWPF.View
 		public HomePageRightPanel()
 		{
 			InitializeComponent();
+		}
+
+		private void Skin_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (e.AddedItems.Count == 1)
+				((MainViewModel)DataContext).HomePageRightPanel.GetVariations(((ShipSkin)e.AddedItems[0]).DivSkinNode);
 		}
 	}
 }

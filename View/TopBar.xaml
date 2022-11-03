@@ -142,7 +142,8 @@
 				<Button.CommandParameter>
 					<MultiBinding Converter="{StaticResource WndActConverter}">
 						<Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=root:MainWindow}" />
-						<Binding ElementName="CloseBtn" Path="Name" />
+						<Binding ElementName="CloseBtn"
+								 Path="Name" />
 					</MultiBinding>
 				</Button.CommandParameter>
 				<Button.OpacityMask>

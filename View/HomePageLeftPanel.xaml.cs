@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AzurLaneWikiScraperWPF.Model;
+using AzurLaneWikiScraperWPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +23,12 @@ namespace AzurLaneWikiScraperWPF.View
 		public HomePageLeftPanel()
 		{
 			InitializeComponent();
+		}
+
+		private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		{
+			if (e.NewValue is not null && e.NewValue.GetType().Name == nameof(ShipTreeItem))
+				((MainViewModel)DataContext).HomePageRightPanel.GetSkins(((ShipTreeItem)e.NewValue).Link);
 		}
 	}
 }

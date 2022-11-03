@@ -8,17 +8,21 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="Resources\CloseBtnOpacityMask.png" />
+	  <Compile Remove="Resources\**" />
+	  <EmbeddedResource Remove="Resources\**" />
+	  <None Remove="Resources\**" />
+	  <Page Remove="Resources\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\CloseBtnOpacityMask.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Resource Include="Resources\CloseBtnOpacityMask.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Resource>
+	  <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 	</ItemGroup>
 
 </Project>

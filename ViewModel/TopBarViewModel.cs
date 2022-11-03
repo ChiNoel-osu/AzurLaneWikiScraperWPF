@@ -29,7 +29,6 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 					break;
 				default:
 					throw new NotImplementedException();
-					break;
 			}
 
 		}

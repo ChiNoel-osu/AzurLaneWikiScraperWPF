@@ -4,7 +4,9 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:local="clr-namespace:AzurLaneWikiScraperWPF.View"
+			 xmlns:model="clr-namespace:AzurLaneWikiScraperWPF.Model"
 			 xmlns:viewmodel="clr-namespace:AzurLaneWikiScraperWPF.ViewModel"
+			 xmlns:converter="clr-namespace:AzurLaneWikiScraperWPF.Converters"
 			 d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
 			 mc:Ignorable="d"
 			 Background="Transparent"
@@ -18,37 +20,62 @@
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</d:UserControl.Resources>
-	<Grid>
+	<Grid IsEnabled="{Binding HomePageLeftPanel.IsNotSearching}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="28" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<TextBox Template="{DynamicResource GlobalTextBoxTemplate}"
-				 Grid.Row="0"
-				 VerticalContentAlignment="Center"
-				 FontSize="14"
-				 BorderBrush="MediumPurple"
-				 CaretBrush="Azure" />
-		<TreeView Grid.Row="1"
+		<DockPanel>
+			<Button Style="{DynamicResource ButtonStyle}"
+					DockPanel.Dock="Right"
+					Background="Transparent"
+					BorderBrush="MediumPurple"
+					Foreground="#C8C8FF"
+					Content="🔍"
+					Width="30"
+					Height="25"
+					VerticalContentAlignment="Center"
+					Margin="5,0,0,0"
+					Padding="0,0,0,1"
+					Command="{Binding HomePageLeftPanel.PopulateTreeCommand}" />
+			<TextBox DockPanel.Dock="Left"
+					 Template="{DynamicResource GlobalTextBoxTemplate}"
+					 Grid.Row="0"
+					 VerticalContentAlignment="Center"
+					 FontSize="14"
+					 BorderBrush="#C8C8FF"
+					 CaretBrush="Azure" />
+		</DockPanel>
+		<TreeView Style="{DynamicResource TreeViewStyle}"
+				  Grid.Row="1"
 				  Background="Transparent"
 				  Margin="0,5,0,0"
-				  Padding="-4,0,1,1"
+				  Padding="-8,0,1,1"
 				  Focusable="False"
-				  BorderBrush="Transparent"
+				  BorderThickness="1"
+				  SelectedItemChanged="TreeView_SelectedItemChanged"
 				  ItemsSource="{Binding HomePageLeftPanel.TreeViewSource}">
 			<TreeView.Resources>
 				<Style TargetType="{x:Type TreeViewItem}">
-					<Setter Property="Foreground"
-							Value="White" />
 					<Setter Property="FontSize"
 							Value="14" />
 					<Setter Property="Padding"
-							Value="4" />
+							Value="2" />
 					<Setter Property="Template"
 							Value="{DynamicResource TreeViewItemTemplate}" />
-
 				</Style>
 			</TreeView.Resources>
+			<TreeView.ItemTemplate>
+				<HierarchicalDataTemplate DataType="{x:Type model:RootTreeItem}"
+										  ItemsSource="{Binding Children}">
+					<StackPanel Orientation="Horizontal"
+								Margin="-4">
+						<Label Content="{Binding Name}"
+							   Tag="{Binding Link}"
+							   Foreground="White" />
+					</StackPanel>
+				</HierarchicalDataTemplate>
+			</TreeView.ItemTemplate>
 		</TreeView>
 	</Grid>
 </UserControl>
