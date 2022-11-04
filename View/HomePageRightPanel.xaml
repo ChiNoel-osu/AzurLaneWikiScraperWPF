@@ -10,9 +10,21 @@
 			 mc:Ignorable="d"
 			 d:DesignHeight="450"
 			 d:DesignWidth="500">
+	<d:UserControl.Resources>
+		<!--We use "d:" so the intellisense on the HomePage don't freak out-->
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/View/GlobalResourceDictionary.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<converter:VariBoxSelectedItem2StringConverter x:Key="VBSI2SConverter" />
+			<converter:Boolean2VisibilityConverter x:Key="B2VConverter" />
+			<converter:SkinVariation2OGLinkConverter x:Key="SV2OGLConverter" />
+		</ResourceDictionary>
+	</d:UserControl.Resources>
 	<UserControl.Resources>
 		<converter:VariBoxSelectedItem2StringConverter x:Key="VBSI2SConverter" />
 		<converter:Boolean2VisibilityConverter x:Key="B2VConverter" />
+		<converter:SkinVariation2OGLinkConverter x:Key="SV2OGLConverter" />
 	</UserControl.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -75,14 +87,47 @@
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>
+				<DockPanel Grid.Row="1">
+					<Button DockPanel.Dock="Bottom"
+							VerticalAlignment="Bottom"
+							Style="{DynamicResource ButtonStyle}"
+							Height="40"
+							Width="40"
+							Background="Transparent"
+							Foreground="CornflowerBlue"
+							Padding="-5,-8,-5,-5"
+							FontSize="28"
+							Content="⏏"
+							IsEnabled="{Binding HomePageRightPanel.IsNotDownloading}"
+							Command="{Binding HomePageRightPanel.DownloadImgCommand}"
+							CommandParameter="{Binding ElementName=ShipImg, Path=Tag}"
+							RenderTransformOrigin="0.5,0.5">
+						<Button.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform />
+								<SkewTransform />
+								<RotateTransform Angle="180" />
+								<TranslateTransform />
+							</TransformGroup>
+						</Button.RenderTransform>
+					</Button>
+					<ProgressBar DockPanel.Dock="Top"
+								 Orientation="Vertical"
+								 Background="Transparent"
+								 Foreground="CornflowerBlue"
+								 Margin="5,0,5,5"
+								 Value="{Binding HomePageRightPanel.DlPersent}"/>
+				</DockPanel>
 			</Grid>
 			<Border DockPanel.Dock="Left"
 					ClipToBounds="True">
-				<Image Source="{Binding ElementName=VariBox, Path=SelectedItem, Converter={StaticResource VBSI2SConverter}}" />
+				<Image Name="ShipImg"
+					   Source="{Binding ElementName=VariBox, Path=SelectedItem, Converter={StaticResource VBSI2SConverter}}"
+					   Tag="{Binding ElementName=VariBox, Path=SelectedItem, Converter={StaticResource SV2OGLConverter}}" />
 			</Border>
 		</DockPanel>
 		<Label Content="Please wait while it loads."
-			   FontSize="20"
+			   FontSize="15"
 			   Grid.Row="1"
 			   Foreground="Wheat"
 			   IsEnabled="{Binding HomePageLeftPanel.IsNotSearching}"

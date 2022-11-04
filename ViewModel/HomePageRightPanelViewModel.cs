@@ -1,12 +1,14 @@
 ﻿using AzurLaneWikiScraperWPF.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -18,6 +20,15 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 		ObservableCollection<ShipSkin> _Skins = new ObservableCollection<ShipSkin>();
 		[ObservableProperty]
 		ObservableCollection<SkinVariation> _Variations = new ObservableCollection<SkinVariation>();
+		[ObservableProperty]
+		int _DlPersent = 0;
+		[ObservableProperty]
+		bool _IsNotDownloading = true;
+
+		readonly string rootDir = Directory.GetCurrentDirectory();
+
+		public string saveDir;
+		public string cacheDir;
 
 		HtmlWeb htmlWeb = new HtmlWeb();
 		public async void GetSkins(string galleryLink)    //Shows skins.
@@ -62,7 +73,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 				//To convert it to original picture, use the following code:
 				string skinOGImg = skinImg.Remove(skinImg.IndexOf("thumb/"), 6);
 				skinOGImg = skinOGImg.Remove(skinOGImg.LastIndexOf('/'));
-				MainWindow.MainVM.HomePageLeftPanel.IsNotSearching = true;	//Visual Change
+				MainWindow.MainVM.HomePageLeftPanel.IsNotSearching = true;  //Visual Change
 				return num switch
 				{
 					0 => new SkinVariation { Variation = "Def.", ShipImageLink = skinImg, ShipImageOGLink = skinOGImg },
@@ -71,8 +82,65 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 			}
 		}
 
+		BitmapImage image;
+		[RelayCommand]
+		public void DownloadImg(string imgLink)
+		{
+			if (!string.IsNullOrWhiteSpace(imgLink))
+			{
+				var enu = Directory.EnumerateFiles(saveDir).GetEnumerator();
+				do  //Check if file exists.
+					if (!enu.MoveNext())
+					{   //File not exist, initiate download.
+						DlPersent = 0;
+						IsNotDownloading = false;
+						BitmapImage newImg = new BitmapImage(new Uri(imgLink));
+						if (image is not null && (image.UriSource == newImg.UriSource))
+						{
+							MessageBox.Show("Please send your use case to Issue.", "This message box should not appear.");
+							IsNotDownloading = true;
+						}
+						else
+						{
+							image = newImg;
+							image.DownloadProgress += Image_DownloadProgress;
+							image.DownloadCompleted += Image_DownloadCompleted;
+						}
+						enu.Dispose();
+						return; //break;
+					}
+				while (enu.Current[(enu.Current.LastIndexOf('\\') + 1)..] != imgLink[(imgLink.LastIndexOf('/') + 1)..]);
+				string cur = enu.Current;
+				MessageBox.Show("File exists");
+			}
+		}
+
+		void Image_DownloadProgress(object sender, DownloadProgressEventArgs e)
+		{
+			DlPersent = e.Progress;
+		}
+		void Image_DownloadCompleted(object sender, EventArgs e)
+		{
+			BitmapImage completedImg = sender as BitmapImage;
+			SaveBitmapImageIntoFile((BitmapImage)sender, saveDir + '\\' + completedImg.UriSource.Segments[^1]);
+			IsNotDownloading = true;
+			GC.Collect();
+		}
+		void SaveBitmapImageIntoFile(BitmapImage bitmapImage, string filePath)
+		{
+			BitmapEncoder encoder = new PngBitmapEncoder();
+			encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+			using (FileStream fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+			{
+				encoder.Save(fileStream);
+			}
+		}
+
+
 		public HomePageRightPanelViewModel()
 		{
+			Directory.CreateDirectory(saveDir = rootDir + "\\Downloads");
+			Directory.CreateDirectory(cacheDir = rootDir + "\\Cache");
 			BindingOperations.EnableCollectionSynchronization(Skins, new object());
 			BindingOperations.EnableCollectionSynchronization(Variations, new object());
 		}
