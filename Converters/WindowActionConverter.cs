@@ -1,8 +1,6 @@
 ﻿using AzurLaneWikiScraperWPF.Model;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
 
 namespace AzurLaneWikiScraperWPF.Converters

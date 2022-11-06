@@ -1,6 +1,4 @@
-﻿using System.Windows.Media.Imaging;
-
-namespace AzurLaneWikiScraperWPF.Model
+﻿namespace AzurLaneWikiScraperWPF.Model
 {
 	public class SkinVariation
 	{

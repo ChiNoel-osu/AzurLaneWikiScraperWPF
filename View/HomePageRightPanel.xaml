@@ -17,13 +17,11 @@
 				<ResourceDictionary Source="/View/GlobalResourceDictionary.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<converter:VariBoxSelectedItem2StringConverter x:Key="VBSI2SConverter" />
-			<converter:Boolean2VisibilityConverter x:Key="B2VConverter" />
 			<converter:SkinVariation2OGLinkConverter x:Key="SV2OGLConverter" />
 		</ResourceDictionary>
 	</d:UserControl.Resources>
 	<UserControl.Resources>
 		<converter:VariBoxSelectedItem2StringConverter x:Key="VBSI2SConverter" />
-		<converter:Boolean2VisibilityConverter x:Key="B2VConverter" />
 		<converter:SkinVariation2OGLinkConverter x:Key="SV2OGLConverter" />
 	</UserControl.Resources>
 	<Grid>
@@ -36,8 +34,9 @@
 				 Background="Transparent"
 				 BorderBrush="MediumPurple"
 				 Foreground="White"
+				 SelectedIndex="{Binding HomePageRightPanel.Index, Mode=TwoWay}"
 				 SelectionChanged="Skin_SelectionChanged"
-				 ItemsSource="{Binding HomePageRightPanel.Skins}"
+				 ItemsSource="{Binding HomePageRightPanel.Skins, Mode=OneWay}"
 				 ScrollViewer.VerticalScrollBarVisibility="Disabled"
 				 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
 				 d:ItemsSource="{d:SampleData ItemCount=5}">
@@ -50,7 +49,6 @@
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Label Content="{Binding Name}"
-						   Tag="{Binding DivSkinNode}"
 						   Foreground="White"
 						   Margin="0"
 						   Padding="0" />
@@ -62,7 +60,7 @@
 			<Grid DockPanel.Dock="Right"
 				  Width="40">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="88" />
+					<RowDefinition Height="80" />
 					<RowDefinition />
 				</Grid.RowDefinitions>
 				<ListBox Name="VariBox"
@@ -73,14 +71,13 @@
 						 BorderBrush="Transparent"
 						 FontWeight="Bold"
 						 HorizontalContentAlignment="Center"
-						 ItemsSource="{Binding HomePageRightPanel.Variations}"
+						 ItemsSource="{Binding HomePageRightPanel.Variations, Mode=OneWay}"
 						 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
 						 ScrollViewer.VerticalScrollBarVisibility="Hidden"
 						 d:ItemsSource="{d:SampleData ItemCount=2}">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
-							<Label Content="{Binding Variation}"
-								   Tag="{Binding ShipImageLink}"
+							<Label Content="{Binding Variation, Mode=OneWay}"
 								   Foreground="White"
 								   Margin="0"
 								   Padding="0" />
@@ -104,33 +101,42 @@
 							RenderTransformOrigin="0.5,0.5">
 						<Button.RenderTransform>
 							<TransformGroup>
-								<ScaleTransform />
-								<SkewTransform />
 								<RotateTransform Angle="180" />
-								<TranslateTransform />
 							</TransformGroup>
 						</Button.RenderTransform>
 					</Button>
-					<ProgressBar DockPanel.Dock="Top"
-								 Orientation="Vertical"
-								 Background="Transparent"
-								 Foreground="CornflowerBlue"
-								 Margin="5,0,5,5"
-								 Value="{Binding HomePageRightPanel.DlPersent}"/>
+					<Grid DockPanel.Dock="Top"
+						  Margin="5,0,5,5">
+						<ProgressBar Orientation="Vertical"
+									 Background="Transparent"
+									 Foreground="CornflowerBlue"
+									 Value="{Binding HomePageRightPanel.DlPersent, Mode=OneWay}" />
+						<Label Content="{Binding HomePageRightPanel.StatusText}"
+							   Foreground="Azure"
+							   Padding="0"
+							   VerticalAlignment="Top"
+							   HorizontalAlignment="Left"
+							   Margin="-100,0,0,0"
+							   FontFamily="Sitka Small">
+							<Label.RenderTransform>
+								<TransformGroup>
+									<ScaleTransform />
+									<SkewTransform />
+									<RotateTransform Angle="90" />
+									<TranslateTransform X="116.5"
+														Y="5" />
+								</TransformGroup>
+							</Label.RenderTransform>
+						</Label>
+					</Grid>
 				</DockPanel>
 			</Grid>
 			<Border DockPanel.Dock="Left"
 					ClipToBounds="True">
 				<Image Name="ShipImg"
-					   Source="{Binding ElementName=VariBox, Path=SelectedItem, Converter={StaticResource VBSI2SConverter}}"
+					   Source="{Binding ElementName=VariBox, Path=SelectedItem, Converter={StaticResource VBSI2SConverter}, Mode=OneWay}"
 					   Tag="{Binding ElementName=VariBox, Path=SelectedItem, Converter={StaticResource SV2OGLConverter}}" />
 			</Border>
 		</DockPanel>
-		<Label Content="Please wait while it loads."
-			   FontSize="15"
-			   Grid.Row="1"
-			   Foreground="Wheat"
-			   IsEnabled="{Binding HomePageLeftPanel.IsNotSearching}"
-			   Visibility="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsEnabled, Converter={StaticResource B2VConverter}}" />
 	</Grid>
 </UserControl>

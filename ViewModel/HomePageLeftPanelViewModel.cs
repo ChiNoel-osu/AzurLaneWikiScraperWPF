@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace AzurLaneWikiScraperWPF.ViewModel
@@ -22,24 +22,33 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 
 		string wikiRoot = "https://azurlane.koumakan.jp";
 		string ListOfShipsPage = "https://azurlane.koumakan.jp/wiki/List_of_Ships";
-		string mainCachePath = Directory.GetCurrentDirectory() + "\\Cache\\MainSiteCache.txt";
+		string mainCachePath = Directory.GetCurrentDirectory() + "\\Cache\\MainSiteCache.html";
 
 		[RelayCommand]
-		public async void PopulateTree()
+		async void PopulateTree()
 		{
 			TreeViewSource.Clear();
-			IsNotSearching = false;
+			IsNotSearching = false; //Visual change.
+			bool usingCache = false;
+			MainWindow.MainVM.HomePageRightPanel.StatusText = "Loading....";
 			string responseStr;
 			//TODO: Try-Catch the web request. Make cache configurable.
 			if (File.Exists(mainCachePath))
+			{
 				responseStr = File.ReadAllText(mainCachePath);
+				usingCache = true;
+				MainWindow.MainVM.HomePageRightPanel.StatusText = "Loadad from cache.";
+			}
 			else
-				using (HttpClient client = new HttpClient())
-				{   //I guess we can use HtmlWeb here given that we have Html Agility Pack?
-					responseStr = await client.GetStringAsync(new Uri(ListOfShipsPage));
-					File.WriteAllText(mainCachePath, responseStr);
-				}   //Uh, whatever.
-					//Start HTML extracting....
+			{
+				MainWindow.MainVM.HomePageRightPanel.StatusText = "Loading from web....";
+				//I guess we can use HtmlWeb here given that we have Html Agility Pack?
+				responseStr = await MainViewModel.httpClient.GetStringAsync(new Uri(ListOfShipsPage));
+				File.WriteAllText(mainCachePath, responseStr);
+				//Uh, whatever.
+			}
+			//Start HTML extracting....
+			MainWindow.MainVM.HomePageRightPanel.StatusText = "Parsing HTML file....";
 			await Task.Run(() =>
 			{
 				HtmlDocument htmlDocument = new HtmlDocument();
@@ -73,6 +82,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 				}
 			});
 			IsNotSearching = true;
+			MainWindow.MainVM.HomePageRightPanel.StatusText = usingCache ? "Loaded from cache." : "Loaded from web.";
 		}
 
 		public HomePageLeftPanelViewModel()

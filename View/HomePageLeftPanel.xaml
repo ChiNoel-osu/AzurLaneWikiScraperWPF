@@ -66,12 +66,9 @@
 			<TreeView.ItemTemplate>
 				<HierarchicalDataTemplate DataType="{x:Type model:RootTreeItem}"
 										  ItemsSource="{Binding Children}">
-					<StackPanel Orientation="Horizontal"
-								Margin="-4">
-						<Label Content="{Binding Name}"
-							   Tag="{Binding Link}"
-							   Foreground="White" />
-					</StackPanel>
+					<Label Content="{Binding Name}"
+						   Foreground="White"
+						   Margin="-4" />
 				</HierarchicalDataTemplate>
 			</TreeView.ItemTemplate>
 		</TreeView>

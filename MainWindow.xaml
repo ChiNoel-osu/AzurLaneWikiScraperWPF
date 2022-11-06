@@ -5,12 +5,16 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:AzurLaneWikiScraperWPF"
 		xmlns:view="clr-namespace:AzurLaneWikiScraperWPF.View"
+		xmlns:viewmodel="clr-namespace:AzurLaneWikiScraperWPF.ViewModel"
+		d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
 		mc:Ignorable="d"
 		Background="#01000000"
 		WindowStyle="None"
-		Title="MainWindow"
+		Title="Azur Lane Gallery"
 		Height="450"
 		Width="600"
+		MinHeight="380"
+		MinWidth="380"
 		WindowStartupLocation="CenterScreen"
 		AllowsTransparency="True">
 	<Window.Resources>
@@ -40,8 +44,9 @@
 				<view:TopBar Grid.Column="1"
 							 MouseDown="TopBar_MouseDown" />
 			</Grid>
-			<view:HomePage Grid.Row="1"
-						   Margin="0,10,0,0"/>
+			<ContentControl Grid.Row="1"
+							Margin="0,10,0,0"
+							Content="{Binding NavBar.CurrentPage}" />
 		</Grid>
 	</Border>
 

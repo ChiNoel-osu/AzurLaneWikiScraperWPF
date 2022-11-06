@@ -11,7 +11,7 @@
 					Value="4,0" />
 		</Style.Setters>
 	</Style>
-	
+
 	<!--#region Rounded textbox radius 10-->
 	<SolidColorBrush x:Key="TextBox.MouseOver.Border"
 					 Color="#FF7EB4EA" />
@@ -52,7 +52,7 @@
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
 	<!--#endregion-->
-	
+
 	<!--#region TreeViewTemplate-->
 	<SolidColorBrush x:Key="TreeViewItem.TreeArrow.Static.Stroke"
 					 Color="#FF818181" />
@@ -221,7 +221,7 @@
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
 	<!--#endregion-->
-	
+
 	<!--#region ButtonStyle-->
 	<Style x:Key="FocusVisual">
 		<Setter Property="Control.Template">
@@ -324,6 +324,17 @@
 							<Setter Property="TextElement.Foreground"
 									TargetName="contentPresenter"
 									Value="{StaticResource Button.Disabled.Foreground}" />
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="border"
+														Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
+														From="Lime"
+														To="MediumPurple"
+														Duration="0:0:2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
@@ -331,7 +342,7 @@
 		</Setter>
 	</Style>
 	<!--#endregion-->
-	
+
 	<!--#region TreeViewStyle-->
 	<SolidColorBrush x:Key="ListBorder"
 					 Color="Transparent" />

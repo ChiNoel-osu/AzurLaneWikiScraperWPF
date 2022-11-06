@@ -4,9 +4,86 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:local="clr-namespace:AzurLaneWikiScraperWPF.View"
+			 xmlns:viewmodel="clr-namespace:AzurLaneWikiScraperWPF.ViewModel"
+			 d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
 			 mc:Ignorable="d"
 			 d:DesignHeight="30"
 			 d:DesignWidth="500">
+	<UserControl.Resources>
+		<SolidColorBrush x:Key="Button.Disabled.Foreground"
+						 Color="Azure" />
+		<Style x:Key="NavButtonStyle"
+			   TargetType="{x:Type Button}">
+			<Setter Property="Foreground"
+					Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+			<Setter Property="HorizontalContentAlignment"
+					Value="Center" />
+			<Setter Property="VerticalContentAlignment"
+					Value="Center" />
+			<Setter	Property="Padding"
+					Value="0,1,0,0" />
+			<Setter Property="FontFamily"
+					Value="Bahnschrift" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ButtonBase}">
+						<Border x:Name="border"
+								Background="{TemplateBinding Background}"
+								BorderBrush="{TemplateBinding BorderBrush}"
+								BorderThickness="{TemplateBinding BorderThickness}"
+								SnapsToDevicePixels="true">
+							<ContentPresenter x:Name="contentPresenter"
+											  Focusable="False"
+											  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											  Margin="{TemplateBinding Padding}"
+											  RecognizesAccessKey="True"
+											  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+											  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver"
+									 Value="true">
+								<Trigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="contentPresenter"
+															 Storyboard.TargetProperty="(TextElement.FontSize)"
+															 To="17.5"
+															 Duration="0:0:0.2"
+															 DecelerationRatio="0.8" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.EnterActions>
+								<Trigger.ExitActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="contentPresenter"
+															 Storyboard.TargetProperty="(TextElement.FontSize)"
+															 To="16.5"
+															 Duration="0:0:0.4"
+															 AccelerationRatio="0.8" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.ExitActions>
+							</Trigger>
+							<Trigger Property="IsPressed"
+									 Value="true">
+								<Setter Property="TextElement.Foreground"
+										TargetName="contentPresenter"
+										Value="AliceBlue" />
+							</Trigger>
+							<Trigger Property="IsEnabled"
+									 Value="false">
+								<Setter Property="TextElement.Foreground"
+										TargetName="contentPresenter"
+										Value="{StaticResource Button.Disabled.Foreground}" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
 	<Grid>
 		<Rectangle Fill="MediumPurple"
 				   Grid.Row="0"
@@ -16,5 +93,46 @@
 				   Grid.Row="0"
 				   RadiusX="10"
 				   RadiusY="10" />
+		<DockPanel>
+			<Button IsEnabled="False"
+					Name="HomePageBtn"
+					DockPanel.Dock="Left"
+					Style="{DynamicResource NavButtonStyle}"
+					Width="88"
+					Content="Text List"
+					FontSize="16.5"
+					FontWeight="Medium"
+					Foreground="LightGray"
+					Background="Transparent"
+					BorderThickness="0"
+					Focusable="False"
+					Command="{Binding NavBar.SwitchPageCommand}"
+					CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}}" />
+			<Button DockPanel.Dock="Left"
+					Style="{DynamicResource NavButtonStyle}"
+					Width="110"
+					Content="Graphical List"
+					FontSize="16.5"
+					FontWeight="Medium"
+					Foreground="LightGray"
+					Background="Transparent"
+					BorderThickness="0"
+					Focusable="False"
+					Command="{Binding NavBar.SwitchPageCommand}"
+					CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}}" />
+			<Button DockPanel.Dock="Right"
+					Style="{DynamicResource NavButtonStyle}"
+					HorizontalAlignment="Right"
+					Width="65"
+					Content="Settings"
+					FontSize="16.5"
+					FontWeight="Medium"
+					Foreground="LightGray"
+					Background="Transparent"
+					BorderThickness="0"
+					Focusable="False"
+					Command="{Binding NavBar.SwitchPageCommand}"
+					CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}}" />
+		</DockPanel>
 	</Grid>
 </UserControl>
