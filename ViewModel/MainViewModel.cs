@@ -13,6 +13,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 		public NavBarViewModel NavBar { get; set; }
 		public HomePageLeftPanelViewModel HomePageLeftPanel { get; set; }
 		public HomePageRightPanelViewModel HomePageRightPanel { get; set; }
+		public GraphicalListPageViewModel GraphicalListPage { get; set; }
 
 		public MainViewModel()
 		{
@@ -31,6 +32,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 			NavBar = new NavBarViewModel();
 			HomePageLeftPanel = new HomePageLeftPanelViewModel();
 			HomePageRightPanel = new HomePageRightPanelViewModel();
+			GraphicalListPage = new GraphicalListPageViewModel();
 		}
 	}
 }

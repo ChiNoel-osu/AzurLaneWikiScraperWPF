@@ -4,9 +4,19 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:local="clr-namespace:AzurLaneWikiScraperWPF.View"
+			 xmlns:view="clr-namespace:AzurLaneWikiScraperWPF.View"
+			 xmlns:viewmodel="clr-namespace:AzurLaneWikiScraperWPF.ViewModel"
+			 d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
 			 mc:Ignorable="d"
 			 d:DesignHeight="500"
 			 d:DesignWidth="600">
+	<d:UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/View/GlobalResourceDictionary.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</d:UserControl.Resources>
 	<Grid ClipToBounds="True">
 		<Rectangle RadiusX="10"
 				   RadiusY="10">
@@ -32,6 +42,71 @@
 				</LinearGradientBrush>
 			</Rectangle.Fill>
 		</Rectangle>
-		
+		<Grid Margin="10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0"
+				  Margin="0,0,12,0">
+				<ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+					<ItemsControl ItemsSource="{Binding GraphicalListPage.GraphicalList}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Expander Header="{Binding Name}"
+										  Foreground="White">
+									<ListBox ItemsSource="{Binding Children}"
+											 Background="Transparent"
+											 Foreground="White"
+											 BorderThickness="0"
+											 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+											 SelectionChanged="ListBox_SelectionChanged">
+										<ListBox.ItemsPanel>
+											<ItemsPanelTemplate>
+												<WrapPanel IsItemsHost="True" />
+											</ItemsPanelTemplate>
+										</ListBox.ItemsPanel>
+										<ListBox.ItemTemplate>
+											<DataTemplate>
+												<StackPanel>
+													<Image Source="{Binding ThumbnailLink}"
+														   Width="{Binding ElementName=ShipName, Path=ActualWidth}" MinWidth="100"/>
+													<Label Content="{Binding Name}"
+														   Name="ShipName"
+														   FontSize="14"
+														   Foreground="White"
+														   HorizontalAlignment="Center" />
+												</StackPanel>
+											</DataTemplate>
+										</ListBox.ItemTemplate>
+									</ListBox>
+								</Expander>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+				<Button Style="{DynamicResource ButtonStyle}"
+						Foreground="White"
+						Background="Transparent"
+						Content="R"
+						Margin="0,1.5,0,0"
+						Padding="1,0,1,1"
+						Width="25"
+						Height="25"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						Command="{Binding GraphicalListPage.RefreshGraphicalListCommand}" />
+			</Grid>
+
+			<GridSplitter Grid.Column="0"
+						  Width="4"
+						  Focusable="False"
+						  Background="DarkGray" />
+			<Border Grid.Column="1"
+					Margin="8,0,0,0">
+				<local:HomePageRightPanel />
+			</Border>
+		</Grid>
+
 	</Grid>
 </UserControl>

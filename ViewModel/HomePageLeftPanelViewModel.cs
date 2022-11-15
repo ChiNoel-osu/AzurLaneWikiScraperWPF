@@ -20,7 +20,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 		[ObservableProperty]
 		bool _IsNotSearching = true;
 
-		string wikiRoot = "https://azurlane.koumakan.jp";
+		public static string wikiRoot = "https://azurlane.koumakan.jp";
 		string ListOfShipsPage = "https://azurlane.koumakan.jp/wiki/List_of_Ships";
 		string mainCachePath = Directory.GetCurrentDirectory() + "\\Cache\\MainSiteCache.html";
 
@@ -73,9 +73,11 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 					foreach (string linkHTML in linkHTMLs)  //Adding each individual ship.
 					{
 						htmlDocument.LoadHtml(linkHTML);
-						ShipTreeItem shipTreeItem = new ShipTreeItem();
-						shipTreeItem.Name = htmlDocument.DocumentNode.InnerText;
-						shipTreeItem.Link = wikiRoot + htmlDocument.DocumentNode.ChildNodes[0].Attributes["href"].Value.ToString() + "/Gallery";
+						ShipTreeItem shipTreeItem = new ShipTreeItem
+						{
+							Name = htmlDocument.DocumentNode.InnerText,
+							Link = wikiRoot + htmlDocument.DocumentNode.ChildNodes[0].Attributes["href"].Value + "/Gallery"
+						};
 						tItem.Children.Add(shipTreeItem);
 					}
 					TreeViewSource.Add(tItem);

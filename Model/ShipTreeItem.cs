@@ -3,6 +3,6 @@
 	public class ShipTreeItem
 	{
 		public string Name { get; set; }    //Display name
-		public string Link { get; set; }    //Act as a tag
+		public string Link { get; set; }    //This will be used in code-behind to call methods in the viewmodel.
 	}
 }
