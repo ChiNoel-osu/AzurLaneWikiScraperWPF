@@ -92,19 +92,12 @@
 							Width="40"
 							Background="Transparent"
 							Foreground="CornflowerBlue"
-							Padding="-5,-8,-5,-5"
-							FontSize="28"
-							Content="⏏"
+                            FontSize="22"
+							Content="📥"
 							IsEnabled="{Binding HomePageRightPanel.IsNotDownloading}"
 							Command="{Binding HomePageRightPanel.DownloadImgCommand}"
 							CommandParameter="{Binding ElementName=ShipImg, Path=Tag}"
-							RenderTransformOrigin="0.5,0.5">
-						<Button.RenderTransform>
-							<TransformGroup>
-								<RotateTransform Angle="180" />
-							</TransformGroup>
-						</Button.RenderTransform>
-					</Button>
+                            Padding="0,-8,0,0" />
 					<Grid DockPanel.Dock="Top"
 						  Margin="5,0,5,5">
 						<ProgressBar Orientation="Vertical"

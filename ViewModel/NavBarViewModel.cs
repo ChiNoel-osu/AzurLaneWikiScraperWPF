@@ -12,15 +12,16 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 	{
 		HomePage HomePage = new HomePage();
 		GraphicalListPage GraphicalListPage = new GraphicalListPage();
+		SettingsPage SettingsPage = new SettingsPage();
 
 		[ObservableProperty]
 		object _CurrentPage;
 
-		public Button lastPage;	//This is set initially by some necessary code-behind in NavBar.xaml.cs
+		public Button lastPage; //This is set initially by some necessary code-behind in NavBar.xaml.cs
 
 		[RelayCommand]
 		void SwitchPage(Button page)
-		{	//Navigation
+		{   //Navigation
 			switch (page.Content)
 			{
 				case "Text List":
@@ -30,12 +31,13 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 					CurrentPage = GraphicalListPage;
 					break;
 				case "Settings":
+					CurrentPage = SettingsPage;
 					break;
 				default:
 					break;
 			}
-			lastPage.IsEnabled = true;	//Enables the non-active page's button.
-			lastPage = page;	//Set the lastPage(page switching from).
+			lastPage.IsEnabled = true;  //Enables the non-active page's button.
+			lastPage = page;    //Set the lastPage(page switching from).
 			lastPage.IsEnabled = false; //Disables the button as its page is active.
 		}
 		public NavBarViewModel()

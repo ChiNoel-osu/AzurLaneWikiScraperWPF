@@ -14,6 +14,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 		public HomePageLeftPanelViewModel HomePageLeftPanel { get; set; }
 		public HomePageRightPanelViewModel HomePageRightPanel { get; set; }
 		public GraphicalListPageViewModel GraphicalListPage { get; set; }
+		public SettingsViewModel SettingsViewModel { get; set; }
 
 		public MainViewModel()
 		{
@@ -33,6 +34,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 			HomePageLeftPanel = new HomePageLeftPanelViewModel();
 			HomePageRightPanel = new HomePageRightPanelViewModel();
 			GraphicalListPage = new GraphicalListPageViewModel();
+			SettingsViewModel = new SettingsViewModel();
 		}
 	}
 }
