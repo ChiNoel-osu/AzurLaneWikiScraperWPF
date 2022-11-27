@@ -1,5 +1,4 @@
-﻿using AzurLaneWikiScraperWPF.ViewModel;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace AzurLaneWikiScraperWPF.View
 {

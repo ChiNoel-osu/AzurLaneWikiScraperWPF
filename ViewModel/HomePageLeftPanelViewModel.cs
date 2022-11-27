@@ -8,21 +8,20 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace AzurLaneWikiScraperWPF.ViewModel
 {
 	public partial class HomePageLeftPanelViewModel : ObservableObject
 	{
+		public static string wikiRoot = "https://azurlane.koumakan.jp";
+		string ListOfShipsPage = "https://azurlane.koumakan.jp/wiki/List_of_Ships";
+		string mainCachePath = Directory.GetCurrentDirectory() + "\\Cache\\MainSiteCache.html";
+
 		[ObservableProperty]
 		ObservableCollection<RootTreeItem> _TreeViewSource = new ObservableCollection<RootTreeItem>();
 		[ObservableProperty]
 		bool _IsNotSearching = true;
-
-		public static string wikiRoot = "https://azurlane.koumakan.jp";
-		string ListOfShipsPage = "https://azurlane.koumakan.jp/wiki/List_of_Ships";
-		string mainCachePath = Directory.GetCurrentDirectory() + "\\Cache\\MainSiteCache.html";
 
 		[RelayCommand]
 		async void PopulateTree()
@@ -33,7 +32,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 			MainWindow.MainVM.HomePageRightPanel.StatusText = "Loading....";
 			string responseStr;
 			//TODO: Try-Catch the web request. Make cache configurable.
-			if (File.Exists(mainCachePath))
+			if (File.Exists(mainCachePath))     //Cache text list webpage.
 			{
 				responseStr = File.ReadAllText(mainCachePath);
 				usingCache = true;
@@ -49,7 +48,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 			}
 			//Start HTML extracting....
 			MainWindow.MainVM.HomePageRightPanel.StatusText = "Parsing HTML file....";
-			await Task.Run(() =>
+			await Task.Run(() =>    //Each shipgirl galleries
 			{
 				HtmlDocument htmlDocument = new HtmlDocument();
 				htmlDocument.LoadHtml(responseStr);

@@ -1,9 +1,6 @@
 ﻿using AzurLaneWikiScraperWPF.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Controls;
 
 namespace AzurLaneWikiScraperWPF.ViewModel

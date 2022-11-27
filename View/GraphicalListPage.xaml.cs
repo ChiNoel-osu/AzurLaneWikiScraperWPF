@@ -23,7 +23,7 @@ namespace AzurLaneWikiScraperWPF.View
 		}   //https://www.codenong.com/16234522
 
 		private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{	//TODO: Initial implementation, might have bugs.
+		{   //TODO: Initial implementation, might have bugs.
 			((MainViewModel)DataContext).HomePageRightPanel.GetSkins(((GraphicalListItem)e.AddedItems[0]).Link, ((ShipTreeItem)e.AddedItems[0]).Name);
 		}
 	}

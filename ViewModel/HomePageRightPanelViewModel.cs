@@ -84,7 +84,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 				case 1: //Normal Skin, no variations.
 					Variations.Add(GetVari(skin, variationNumber++));
 					break;
-				case 2: //Two variations exists. Mainly Default and NOBG.
+				case 2: //Two or more variations exists. Mainly Default and NOBG.
 					foreach (HtmlNode node in skin.ChildNodes[1].ChildNodes)
 						Variations.Add(GetVari(node, variationNumber++, true));
 					break;

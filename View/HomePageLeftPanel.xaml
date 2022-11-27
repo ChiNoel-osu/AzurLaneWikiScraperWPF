@@ -68,7 +68,7 @@
 										  ItemsSource="{Binding Children}">
 					<Label Content="{Binding Name}"
 						   Foreground="White"
-						   Margin="-4" />
+						   Margin="-4"/>
 				</HierarchicalDataTemplate>
 			</TreeView.ItemTemplate>
 		</TreeView>
