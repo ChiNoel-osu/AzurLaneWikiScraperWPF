@@ -49,7 +49,9 @@
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0"
 				  Margin="0,0,12,0">
-				<ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" VerticalScrollBarVisibility="Auto">
+				<ScrollViewer Template="{DynamicResource ScrollViewerTemplate}"
+							  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+							  VerticalScrollBarVisibility="Auto">
 					<ItemsControl ItemsSource="{Binding GraphicalListPage.GraphicalList}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
@@ -70,7 +72,8 @@
 											<DataTemplate>
 												<StackPanel>
 													<Image Source="{Binding ThumbnailLink}"
-														   Width="{Binding ElementName=ShipName, Path=ActualWidth}" MinWidth="100"/>
+														   Width="{Binding ElementName=ShipName, Path=ActualWidth}"
+														   MinWidth="100" />
 													<Label Content="{Binding Name}"
 														   Name="ShipName"
 														   FontSize="14"
@@ -86,6 +89,7 @@
 					</ItemsControl>
 				</ScrollViewer>
 				<Button Style="{DynamicResource ButtonStyle}"
+						IsEnabled="{Binding HomePageLeftPanel.IsNotSearching}"
 						Foreground="White"
 						Background="Transparent"
 						Content="R"
@@ -97,7 +101,6 @@
 						VerticalAlignment="Top"
 						Command="{Binding GraphicalListPage.RefreshGraphicalListCommand}" />
 			</Grid>
-
 			<GridSplitter Grid.Column="0"
 						  Width="4"
 						  Focusable="False"
@@ -107,6 +110,5 @@
 				<local:HomePageRightPanel />
 			</Border>
 		</Grid>
-
 	</Grid>
 </UserControl>

@@ -22,14 +22,13 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 		[RelayCommand]
 		void RefreshGraphicalList()
 		{
+			MainWindow.MainVM.HomePageLeftPanel.IsNotSearching = false;
 			Task.Run(() =>
 			{
 				GraphicalList.Clear();
 				string graphList;
 				if (File.Exists(imgListCachePath))
-				{
 					graphList = File.ReadAllText(imgListCachePath);
-				}
 				else
 				{
 					graphList = MainViewModel.httpClient.GetStringAsync(new Uri($"https://azurlane.koumakan.jp/wiki/List_of_Ships_by_Image")).GetAwaiter().GetResult();
@@ -56,6 +55,7 @@ namespace AzurLaneWikiScraperWPF.ViewModel
 					GraphicalList.Add(graphicalRootItem);
 				});
 			});
+			MainWindow.MainVM.HomePageLeftPanel.IsNotSearching = true;
 		}
 
 		public GraphicalListPageViewModel()
